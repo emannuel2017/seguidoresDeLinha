@@ -16,8 +16,9 @@ int Din2 = 5;
 int Ein3 = 8;
 int Ein4 = 9;
 
-int Vel = 100;
-int brack = 0;
+//int Vel = 100;
+//int brack = 0;
+
 int novaVelocidadeA; 
 int novaVelocidadeB;
 int buzze = 2;
@@ -25,8 +26,8 @@ int buzze = 2;
 int erro;
 int espera = 0;
 
-int va = 0;
-int vb = 0;
+//int va = 0;
+//int vb = 0;
 
 int centro, direita, esquerda, extremaDireita; 
 int extremaEsquerda;
@@ -112,15 +113,15 @@ void controlePid(int erro){
   if(comecoCurva){         
     VelocidadeConstatnteA = 60;//+5
     VelocidadeConstatnteB = 60;//+5
-      kp = 9.877;//15.2//16
-      kd = 9.877;//5.2//6
+      kp = 15;//15.2//16
+      kd = 15;//5.2//6
          
   }
   else{
-    VelocidadeConstatnteA = 70;//+5
-    VelocidadeConstatnteB = 70;
-      kp = 14.816;//15.2//16
-      kd = 14.816;//5.2//6
+    VelocidadeConstatnteA = 60;//+5
+    VelocidadeConstatnteB = 60;
+      kp = 20;//15.2//16
+      kd = 20;//5.2//6
      
   }
 
@@ -133,7 +134,7 @@ void controlePid(int erro){
   
 
 
-  sinalPid = kp * erro + kd * (erro_anterior - erro);
+  sinalPid = kp * erro;// + kd * (erro_anterior - erro);
 
   novaVelocidadeA = VelocidadeConstatnteA + sinalPid ;
   novaVelocidadeB = VelocidadeConstatnteB - sinalPid ;
@@ -186,14 +187,9 @@ void loop() {
     tone(buzze,2000,500);
   }
 
-
   if ( (centro == 1) && (esquerda == 0) && (direita == 0) && (extremaEsquerda== 0) && (extremaDireita == 0)  ) {
     controlePid(0);
-
   }
-
-
-
 
   //0 1 1 0 0 :-1
   else if ((centro == 1) && (esquerda == 1) && (direita == 0) && (extremaEsquerda == 0) && (extremaDireita == 0) ) {
@@ -222,7 +218,6 @@ void loop() {
     noTone(buzze);
   }
 
-
   //1 1 0 0 0 :-3
   else if ((centro == 0) && (esquerda == 1) && (direita == 0) && (extremaEsquerda == 1) && (extremaDireita == 0) ) {
     controlePid(-3);
@@ -248,12 +243,7 @@ void loop() {
     noTone(buzze);
   }
 
-
-
-
   //  //1 0 0 0 0 :-5
-
-
 
 }
 
