@@ -96,8 +96,8 @@ trocaSinaisDosvaloresAbaixoDeZero(novaVelocidadeA, novaVelocidadeB);
   */
   digitalWrite(entradaDireta1, LOW);
   digitalWrite(entradaDireta2, HIGH);
-  digitalWrite(entradaEsquerda3, HIGH);
-  digitalWrite(entradaEsquerda4, LOW);
+  digitalWrite(entradaEsquerda3, LOW);
+  digitalWrite(entradaEsquerda4, HIGH);
 
   analogWrite(motorA, novaVelocidadeA);//78 velocidade minima// 158 velocidade media
   analogWrite(motorB, novaVelocidadeB);//45 velocidade minima // 54 velocidade media---------------------------------------
@@ -139,8 +139,8 @@ void controlePid(int erro) {
   else {
     VelocidadeConstatnteA = 60;//+5
     VelocidadeConstatnteB = 60;
-    kp = 20;//15.2//16
-    kd = 20;//5.2//6
+    kp = 9.79;//15.2//16
+    kd = 9.79;//5.2//6
   }
 
   /*delay(200);
@@ -152,7 +152,7 @@ void controlePid(int erro) {
 
 
 
-  sinalPid = kp * erro + kd * (erro_anterior - erro);
+  sinalPid = kp * erro;// + kd * (erro_anterior - erro);
 
   novaVelocidadeA = VelocidadeConstatnteA + sinalPid ;
   novaVelocidadeB = VelocidadeConstatnteB - sinalPid ;
