@@ -1,16 +1,16 @@
 /*
-#define sen1  11
-#define sen2  12
-#define sen3  10
-#define sen4  13
-#define sen5  9
-int motorA = 6;
-int motorB = 5;
+  #define sen1  11
+  #define sen2  12
+  #define sen3  10
+  #define sen4  13
+  #define sen5  9
+  int motorA = 6;
+  int motorB = 5;
 
-int entradaDireta1 = 8;
-int entradaDireta2 = 7;
-int entradaEsquerda3 = 4;
-int entradaEsquerda4 = 3;
+  int entradaDireta1 = 8;
+  int entradaDireta2 = 7;
+  int entradaEsquerda3 = 4;
+  int entradaEsquerda4 = 3;
 
 */
 //starwars
@@ -86,9 +86,9 @@ void setup() {
   }
 }
 
-void trocaSinaisDosvaloresAbaixoDeZero(int novaVelocidadeA, int novaVelocidadeB ) {
+void trocaSinaisDosvaloresAbaixoDeZero(float novaVelocidadeA, float novaVelocidadeB ) {
 
- 
+
 
   if (novaVelocidadeA < 0) {
     novaVelocidadeA = novaVelocidadeA = 0;
@@ -100,45 +100,59 @@ void trocaSinaisDosvaloresAbaixoDeZero(int novaVelocidadeA, int novaVelocidadeB 
   }
 
 
- frente(novaVelocidadeA, novaVelocidadeB);
+  frente(novaVelocidadeA, novaVelocidadeB);
 
 }
 
 
-void frente(int novaVelocidadeA, int novaVelocidadeB) {
+void frente(float novaVelocidadeA, float novaVelocidadeB) {
 
-  
 
-  
-  
+
+
+
   digitalWrite(entradaDireta1, LOW);
   digitalWrite(entradaDireta2, HIGH);
   digitalWrite(entradaEsquerda3, HIGH);
   digitalWrite(entradaEsquerda4, LOW);
-   //delay(500);
-     delay(500);
-    Serial.print("A");
-    Serial.println(novaVelocidadeA);
-    Serial.print("B");
-    Serial.println(novaVelocidadeB);
+  //delay(500);
+ // delay(500);
+  Serial.print("A");
+  Serial.println(novaVelocidadeA);
+  Serial.print("B");
+  Serial.println(novaVelocidadeB);
+
+  if (novaVelocidadeA > 180) {
+    novaVelocidadeA = 110;
+    novaVelocidadeB = 80;
     
-  if(novaVelocidadeA > 250){
-    novaVelocidadeA = 190;
-    novaVelocidadeB = 0;
-    analogWrite(motorA, novaVelocidadeA);//78 velocidade minima// 158 velocidade media
-    analogWrite(motorB, novaVelocidadeB);//45 velocidade minima // 54 velocidade media---------------------------------------
-    }  
-  else if(novaVelocidadeB > 250){
-    novaVelocidadeB = 190;
-    novaVelocidadeA = 0;
-    analogWrite(motorA, novaVelocidadeA);//78 velocidade minima// 158 velocidade media
-    analogWrite(motorB, novaVelocidadeB);//45 velocidade minima // 54 velocidade media---------------------------------------
-    }
-    else{
-    analogWrite(motorA, novaVelocidadeA);//78 velocidade minima// 158 velocidade media
-    analogWrite(motorB, novaVelocidadeB);//45 velocidade minima // 54 velocidade media---------------------------------------  
-    }
+    
+    digitalWrite(entradaDireta1, LOW);
+    digitalWrite(entradaDireta2, HIGH);
+    digitalWrite(entradaEsquerda3, LOW);
+    digitalWrite(entradaEsquerda4, HIGH);
    
+    
+    analogWrite(motorA, novaVelocidadeA);//78 velocidade minima// 158 velocidade media
+    analogWrite(motorB, novaVelocidadeB);//45 velocidade minima // 54 velocidade media---------------------------------------
+  }
+  else if (novaVelocidadeB > 180) {
+    novaVelocidadeB = 110;
+    novaVelocidadeA = 80;
+    
+    digitalWrite(entradaDireta1, HIGH);
+    digitalWrite(entradaDireta2, LOW);
+    digitalWrite(entradaEsquerda3, HIGH);
+    digitalWrite(entradaEsquerda4, LOW);
+    
+    analogWrite(motorA, novaVelocidadeA);//78 velocidade minima// 158 velocidade media
+    analogWrite(motorB, novaVelocidadeB);//45 velocidade minima // 54 velocidade media---------------------------------------
+  }
+  else {
+    analogWrite(motorA, novaVelocidadeA);//78 velocidade minima// 158 velocidade media
+    analogWrite(motorB, novaVelocidadeB);//45 velocidade minima // 54 velocidade media---------------------------------------
+  }
+
 }
 
 
@@ -172,15 +186,15 @@ void controlePid(int erro) {
     VelocidadeConstatnteB = 80;
     kp = 15.6;//15.2//16
     kd = 15.6;//5.2//6
-  }*/
+    }*/
   //else {
-    VelocidadeConstatnteA = 60;//+5
-    VelocidadeConstatnteB = 60;//+5
-    kp = 20;//15.2//16
-    kd = 0;//40.50;//5.2//6
-    ki = 0;
+  VelocidadeConstatnteA = 70;//+5
+  VelocidadeConstatnteB = 70;//+5
+  kp = 15;//15.2//16
+  kd = 0;//40.50;//5.2//6
+  ki = 0;
 
-    
+
   //}
 
   /*delay(200);
@@ -196,11 +210,11 @@ void controlePid(int erro) {
 
   novaVelocidadeA = VelocidadeConstatnteA + sinalPid ;
   novaVelocidadeB = VelocidadeConstatnteB - sinalPid ;
-   
+
   erro_anterior = erro;
 
   trocaSinaisDosvaloresAbaixoDeZero(novaVelocidadeA, novaVelocidadeB);
-  
+
 
 
 
@@ -241,10 +255,10 @@ void loop() {
     espera++;
     delay(2000);
   }
-  /*else if ( ((extremaEsquerda == 0) || (extremaEsquerda == 1)) && 
-  (centro == 1) && (esquerda == 0) && 
-  (direita == 0) && (esquerdaExterno == 1)
-  && (extremaDireita == 0)  ) {
+  /*else if ( ((extremaEsquerda == 0) || (extremaEsquerda == 1)) &&
+    (centro == 1) && (esquerda == 0) &&
+    (direita == 0) && (esquerdaExterno == 1)
+    && (extremaDireita == 0)  ) {
 
     if (entrouNaCurva < 1) {
       Serial.println(entrouNaCurva);
@@ -253,7 +267,7 @@ void loop() {
       entrouNaCurva++;
     }
 
-  }*/
+    }*/
 
 
   /*else if ((centro == 1) && (esquerda == 0) && (direita == 0) && (extremaEsquerda == 0) && (extremaDireita == 1) ) {
@@ -324,7 +338,7 @@ void loop() {
     frente(0,0);
     entrouNaCurva = 0;
     noTone(buzze);
-  }*/
+    }*/
 
   //  //1 0 0 0 0 :-5
 
