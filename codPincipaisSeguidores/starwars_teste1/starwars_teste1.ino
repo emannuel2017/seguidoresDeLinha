@@ -1,20 +1,20 @@
-/*
-  #define sen1  11
-  #define sen2  12
-  #define sen3  10
-  #define sen4  13
-  #define sen5  9
-  int motorA = 6;
-  int motorB = 5;
 
-  int entradaDireta1 = 8;
-  int entradaDireta2 = 7;
-  int entradaEsquerda3 = 4;
-  int entradaEsquerda4 = 3;
+#define sen1  11
+#define sen2  12
+#define sen3  10
+#define sen4  13
+#define sen5  9
+int motorA = 6;
+int motorB = 5;
 
-*/
+int entradaDireta1 = 8;
+int entradaDireta2 = 7;
+int entradaEsquerda3 = 4;
+int entradaEsquerda4 = 3;
+
+
 //starwars
-#define sen1  13
+/*#define sen1  13
 #define sen2  12
 #define sen3  11
 #define sen4  6
@@ -31,7 +31,7 @@ int entradaEsquerda4 = 9;
 
 
 //starwars\\
-
+*/
 
 
 //int Vel = 100;
@@ -86,73 +86,59 @@ void setup() {
   }
 }
 
-void trocaSinaisDosvaloresAbaixoDeZero(float novaVelocidadeA, float novaVelocidadeB ) {
+void trocaSinaisDosvaloresAbaixoDeZero(int novaVelocidadeA, int novaVelocidadeB ) {
 
-
+ 
 
   if (novaVelocidadeA < 0) {
-    novaVelocidadeA = novaVelocidadeA = 0;
+    novaVelocidadeA = novaVelocidadeA * (-1);
   }
 
 
   if (novaVelocidadeB < 0) {
-    novaVelocidadeB = novaVelocidadeB  = 0;
+    novaVelocidadeB = novaVelocidadeB  * (-1);
   }
 
 
-  frente(novaVelocidadeA, novaVelocidadeB);
+ frente(novaVelocidadeA, novaVelocidadeB);
 
 }
 
 
-void frente(float novaVelocidadeA, float novaVelocidadeB) {
+void frente(int novaVelocidadeA, int novaVelocidadeB) {
 
+  
 
-
-
-
+  
+  
   digitalWrite(entradaDireta1, LOW);
   digitalWrite(entradaDireta2, HIGH);
-  digitalWrite(entradaEsquerda3, HIGH);
-  digitalWrite(entradaEsquerda4, LOW);
-  //delay(500);
- // delay(500);
-  Serial.print("A");
-  Serial.println(novaVelocidadeA);
-  Serial.print("B");
-  Serial.println(novaVelocidadeB);
-
-  if (novaVelocidadeA > 180) {
-    novaVelocidadeA = 110;
-    novaVelocidadeB = 80;
+  digitalWrite(entradaEsquerda3, LOW);
+  digitalWrite(entradaEsquerda4, HIGH);
+   //delay(500);
+   // delay(500);
+    Serial.print("A");
+    Serial.println(novaVelocidadeA);
+    Serial.print("B");
+    Serial.println(novaVelocidadeB);
     
-    
-    digitalWrite(entradaDireta1, LOW);
-    digitalWrite(entradaDireta2, HIGH);
-    digitalWrite(entradaEsquerda3, LOW);
-    digitalWrite(entradaEsquerda4, HIGH);
+  /*if(novaVelocidadeA > 250){
+    novaVelocidadeA = 190;
+    novaVelocidadeB = 0;
+    analogWrite(motorA, novaVelocidadeA);//78 velocidade minima// 158 velocidade media
+    analogWrite(motorB, novaVelocidadeB);//45 velocidade minima // 54 velocidade media---------------------------------------
+    }  
+  else if(novaVelocidadeB > 250){
+    novaVelocidadeB = 190;
+    novaVelocidadeA = 0;
+    analogWrite(motorA, novaVelocidadeA);//78 velocidade minima// 158 velocidade media
+    analogWrite(motorB, novaVelocidadeB);//45 velocidade minima // 54 velocidade media---------------------------------------
+    }*/
+    //else{
+    analogWrite(motorA, novaVelocidadeA);//78 velocidade minima// 158 velocidade media
+    analogWrite(motorB, novaVelocidadeB);//45 velocidade minima // 54 velocidade media---------------------------------------  
+    //}
    
-    
-    analogWrite(motorA, novaVelocidadeA);//78 velocidade minima// 158 velocidade media
-    analogWrite(motorB, novaVelocidadeB);//45 velocidade minima // 54 velocidade media---------------------------------------
-  }
-  else if (novaVelocidadeB > 180) {
-    novaVelocidadeB = 110;
-    novaVelocidadeA = 80;
-    
-    digitalWrite(entradaDireta1, HIGH);
-    digitalWrite(entradaDireta2, LOW);
-    digitalWrite(entradaEsquerda3, HIGH);
-    digitalWrite(entradaEsquerda4, LOW);
-    
-    analogWrite(motorA, novaVelocidadeA);//78 velocidade minima// 158 velocidade media
-    analogWrite(motorB, novaVelocidadeB);//45 velocidade minima // 54 velocidade media---------------------------------------
-  }
-  else {
-    analogWrite(motorA, novaVelocidadeA);//78 velocidade minima// 158 velocidade media
-    analogWrite(motorB, novaVelocidadeB);//45 velocidade minima // 54 velocidade media---------------------------------------
-  }
-
 }
 
 
@@ -182,19 +168,18 @@ void controlePid(int erro) {
 
   /*if (comecoCurva) {
 
-    VelocidadeConstatnteA = 80;//+5
-    VelocidadeConstatnteB = 80;
-    kp = 15.6;//15.2//16
-    kd = 15.6;//5.2//6
-    }*/
-  //else {
-  VelocidadeConstatnteA = 70;//+5
-  VelocidadeConstatnteB = 70;//+5
-  kp = 15;//15.2//16
-  kd = 0;//40.50;//5.2//6
-  ki = 0;
-
-
+   VelocidadeConstatnteA = 100;//+5
+    VelocidadeConstatnteB = 100;//+5
+    kp = 30;//16
+    kd = 0.6;//5.2//6
+    ki = 0;  
+  }
+  else {*/
+    VelocidadeConstatnteA = 100;//+5
+    VelocidadeConstatnteB = 100;//+5
+    kp = 18;//16
+    kd = 0;//5.2//6
+    ki = 0;    
   //}
 
   /*delay(200);
@@ -210,21 +195,15 @@ void controlePid(int erro) {
 
   novaVelocidadeA = VelocidadeConstatnteA + sinalPid ;
   novaVelocidadeB = VelocidadeConstatnteB - sinalPid ;
-
+   
   erro_anterior = erro;
 
   trocaSinaisDosvaloresAbaixoDeZero(novaVelocidadeA, novaVelocidadeB);
-
-
-
-
 }
 
 
 
-long retornaTempoParaOControleDoBuzzer() {
-
-
+long retornaTempoParaControleDoBuzzer() {
   long tempoAtual = millis();
   if (tempoAtual > (tempoInicial + 500)) {
     return  tempoInicial = tempoAtual;
@@ -233,102 +212,128 @@ long retornaTempoParaOControleDoBuzzer() {
 }
 
 void loop() {
-
-  lerSensores();
-
-
-  //0 1 0 0 0 0 0  --> Erro -4
-  //0 1 1 0 0 0 0  --> Erro -3
-  //0 0 1 0 0 0 0  --> Erro -2
-  //0 0 1 1 0 0 0  --> Erro -1
-  //0 0 0 1 0 0 0  --> Erro  0
-  //0 0 0 1 1 0 0  --> Erro  1
-  //0 0 0 0 1 0 0  --> Erro  2
-  //0 0 0 0 1 1 0  --> Erro  3
-  //0 0 0 0 0 1 0  --> Erro  4
-
-
-
+  
+  // 1 0 0 0 0   --> Erro -4
+  // 1 1 0 0 0   --> Erro -3
+  // 0 1 0 0 0   --> Erro -2
+  // 0 1 1 0 0   --> Erro -1
+  // 0 0 1 0 0   --> Erro  0
+  // 0 0 1 1 0   --> Erro  1
+  // 0 0 0 1 0   --> Erro  2
+  // 0 0 0 1 1   --> Erro  3
+  // 0 0 0 0 1   --> Erro  4
   //0 0 1 0 0 :0
-
   if (espera < 1) {
     espera++;
     delay(2000);
   }
-  /*else if ( ((extremaEsquerda == 0) || (extremaEsquerda == 1)) &&
-    (centro == 1) && (esquerda == 0) &&
-    (direita == 0) && (esquerdaExterno == 1)
-    && (extremaDireita == 0)  ) {
 
+  
+  lerSensores();
+  
+  
+  if ( ((extremaEsquerda == 0) || (extremaEsquerda == 1)) && 
+  (centro == 1) && (esquerda == 0) && 
+  (direita == 0) && (esquerdaExterno == 1)
+  && (extremaDireita == 0)  ) {
+    
     if (entrouNaCurva < 1) {
-      Serial.println(entrouNaCurva);
+    
+      //Serial.println(entrouNaCurva);
       comecoCurva = !comecoCurva;
-      tone(buzze, 5000, retornaTempoParaOControleDoBuzzer());
+      tone(buzze, 5000, retornaTempoParaControleDoBuzzer());
+      inte = 0;
       entrouNaCurva++;
+    
     }
-
-    }*/
+  }
 
 
   /*else if ((centro == 1) && (esquerda == 0) && (direita == 0) && (extremaEsquerda == 0) && (extremaDireita == 1) ) {
     frente(0, 0);
-    tone(buzze, 2000, retornaTempoParaOControleDoBuzzer());
+    tone(buzze, 2000, retornaTempoParaControleDoBuzzer());
     }*/
 
-  if ( (centro == 1) && (esquerda == 0) && (direita == 0) && (extremaEsquerda == 0) && (extremaDireita == 0)  ) {
+  else if ( (centro == 1) && (esquerda == 0) && 
+  (direita == 0) && (extremaEsquerda == 0)
+  && (extremaDireita == 0)  ) {
     controlePid(0);
   }
 
+
+
   //0 1 1 0 0 :-1
-  else if ((centro == 1) && (esquerda == 1) && (direita == 0) && (extremaEsquerda == 0) && (extremaDireita == 0) ) {
+  else if ((centro == 1) && (esquerda == 1) && 
+  (direita == 0) && (extremaEsquerda == 0)
+  && (extremaDireita == 0) ) {
     controlePid(-1);
     entrouNaCurva = 0;
     noTone(buzze);
   }
 
   //0 0 1 1 0 :1
-  else if ((centro == 1) && (esquerda == 0) && (direita == 1) && (extremaEsquerda == 0) && (extremaDireita == 0) ) {
+  else if ((centro == 1) && (esquerda == 0) && 
+  (direita == 1) && (extremaEsquerda == 0)
+  && (extremaDireita == 0) ) {
     controlePid(1);
     entrouNaCurva = 0;
     noTone(buzze);
   }
+
+  
   //0 1 0 0 0 :-2
-  else if ((centro == 0) && (esquerda == 1) && (direita == 0) && (extremaEsquerda == 0) && (extremaDireita == 0) ) {
+  else if ((centro == 0) && (esquerda == 1) && 
+  (direita == 0) && (extremaEsquerda == 0) 
+  && (extremaDireita == 0) ) {
     controlePid(-2);
     entrouNaCurva = 0;
     noTone(buzze);
   }
 
   //0 0 0 1 0 :2
-  else if ((centro == 0) && (esquerda == 0) && (direita == 1) && (extremaEsquerda == 0) && (extremaDireita == 0) ) {
+  else if ((centro == 0) && (esquerda == 0) && 
+  (direita == 1) && (extremaEsquerda == 0)
+  && (extremaDireita == 0) ) {
     controlePid(2);
     entrouNaCurva = 0;
     noTone(buzze);
   }
 
+
   //1 1 0 0 0 :-3
-  else if ((centro == 0) && (esquerda == 1) && (direita == 0) && (extremaEsquerda == 1) && (extremaDireita == 0) ) {
+  else if ((centro == 0) && (esquerda == 1) && 
+  (direita == 0) && (extremaEsquerda == 1) 
+  && (extremaDireita == 0) ) {
     controlePid(-3);
     entrouNaCurva = 0;
     noTone(buzze);
   }
 
   //0 0 0 1 1 :3
-  else if ((centro == 0) && (esquerda == 0) && (direita == 1) && (extremaEsquerda == 0) && (extremaDireita == 1) ) {
+  else if ((centro == 0) && (esquerda == 0) && 
+  (direita == 1) && (extremaEsquerda == 0) && 
+  (extremaDireita == 1) ) {
+   
     controlePid(3);
     entrouNaCurva = 0;
     noTone(buzze);
+  
   }
 
+
   //1 0 0 0 0 :-4
-  else if ((centro == 0) && (esquerda == 0) && (direita == 0) && (extremaEsquerda == 1) && (extremaDireita == 0) ) {
+  else if ((centro == 0) && (esquerda == 0) 
+  && (direita == 0) && (extremaEsquerda == 1)
+  && (extremaDireita == 0) ) {
     controlePid(-4);
     entrouNaCurva = 0;
     noTone(buzze);
   }
 
   //0 0 0 0 1 :4
-  else if ((centro == 0) && (esquerda == 0) && (direita == 0) && (extremaEsquerda == 0) && (extremaDireita == 1) ) {
+  else if ((centro == 0) && (esquerda == 0) && 
+  (direita == 0) && (extremaEsquerda == 0) 
+  && (extremaDireita == 1) ) {
     controlePid(4);
     entrouNaCurva = 0;
     noTone(buzze);
@@ -338,7 +343,7 @@ void loop() {
     frente(0,0);
     entrouNaCurva = 0;
     noTone(buzze);
-    }*/
+  }*/
 
   //  //1 0 0 0 0 :-5
 
