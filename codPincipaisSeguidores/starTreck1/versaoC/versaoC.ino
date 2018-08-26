@@ -11,7 +11,7 @@ int entradaDireta1 = 8;
 int entradaDireta2 = 7;
 int entradaEsquerda3 = 4;
 int entradaEsquerda4 = 3;
-int tempo_parar;
+
 
 //starwars
 /*#define sen1  13
@@ -48,7 +48,7 @@ int espera = 0;
 //int vb = 0;
 
 int centro, direita, esquerda, extremaDireita;
-int extremaEsquerda, ValDirExt;
+int extremaEsquerda, esquerdaExterno;
 float inte = 0;
 float kp = 40;
 float ki = 0;
@@ -125,8 +125,8 @@ void frente(int novaVelocidadeA, int novaVelocidadeB) {
   Serial.println(novaVelocidadeA);
   Serial.print("B");
   Serial.println(novaVelocidadeB);
-delay(500);*/
- /* if (novaVelocidadeA > 130) {
+*/
+  if (novaVelocidadeA > 130) {
     novaVelocidadeA = 90;
     novaVelocidadeB = 80;
 
@@ -143,11 +143,11 @@ delay(500);*/
     novaVelocidadeA = 80;
     analogWrite(motorA, novaVelocidadeA);//78 velocidade minima// 158 velocidade media
     analogWrite(motorB, novaVelocidadeB);//45 velocidade minima // 54 velocidade media---------------------------------------
-  }*/
- // else {
+  }
+  else {
     analogWrite(motorA, novaVelocidadeA);//78 velocidade minima// 158 velocidade media
     analogWrite(motorB, novaVelocidadeB);//45 velocidade minima // 54 velocidade media---------------------------------------
-  //}
+  }
   
   
 }
@@ -162,15 +162,15 @@ void lerSensores() {
   direita = analogRead(A5);
   //Serial.println(direita);
   extremaDireita = digitalRead(sen5);
-  ValDirExt = analogRead(A4);
+  //esquerdaExterno = analogRead();
   mudarValorDaLeituraParaUmOuZero();
 }
 void mudarValorDaLeituraParaUmOuZero() {
 
-  if (ValDirExt < 200) {
-    ValDirExt = 0;
+  if (direita < 200) {
+    direita = 0;
   } else {
-    ValDirExt = 1;
+    direita = 1;
   }
 
 }
@@ -187,10 +187,10 @@ void controlePid(int erro) {
     ki = 0;
     }
     else {*/
-  VelocidadeConstatnteA = 130;//+5
-  VelocidadeConstatnteB = 130;//+5
-  kp = 24;//16
-  kd = 0;//5.2//6
+  VelocidadeConstatnteA = 90;//+5
+  VelocidadeConstatnteB = 90;//+5
+  kp = 20;//16
+  kd = 1.5;//5.2//6
   ki = 0;
   //}
 
@@ -203,14 +203,16 @@ void controlePid(int erro) {
 
 
 
-  fd\sinalPid = kp * erro + kd * (erro_anterior - erro) + ki * (inte + erro_anterior);
+  sinalPid = kp * erro + kd * (erro_anterior - erro) + ki * (inte + erro_anterior);
 
   novaVelocidadeA = VelocidadeConstatnteA + sinalPid ;
   novaVelocidadeB = VelocidadeConstatnteB - sinalPid ;
-//if(erro == 4 || erro == -4){
-//    novaVelocidadeA = novaVelocidadeA - (novaVelocidadeA * 1);
-//    novaVelocidadeB = novaVelocidadeB - (novaVelocidadeB * 1);
-//}
+
+  if (erro == 4 || erro == -4)
+  {
+    novaVelocidadeA = novaVelocidadeA - (novaVelocidadeA * 0.2);
+    novaVelocidadeB = novaVelocidadeB - (novaVelocidadeB * 0.2);
+  }
 
   erro_anterior = erro;
 
@@ -240,35 +242,21 @@ void loop() {
   
 
 
-   
-
-  /* while((tempo_parar >= 45000) && (ValDirExt == 1) )  {
-
-      Serial.println(ValDirExt);
-      frente(85,85);
-      delay(300);
-      frente(0,0);
-      delay(2000);
-    
-    }
-   */
-
-
   lerSensores();
 
 
 
 
-    /*if ((centro == 1) && (esquerda == 0) && (direita == 0) && (extremaEsquerda == 0) && (extremaDireita == 1) ) {
+    if ((centro == 1) && (esquerda == 0) && (direita == 0) && (extremaEsquerda == 0) && (extremaDireita == 1) ) {
      if( comecoFim >= 1 ) {
      frente(0, 0);
      tone(buzze, 2000, retornaTempoParaControleDoBuzzer());
      delay(2000);
       } 
       ++comecoFim;
-    }*/
+    }
 
-   if ( (centro == 1) && (esquerda == 0) &&
+  else if ( (centro == 1) && (esquerda == 0) &&
             (direita == 0) && (extremaEsquerda == 0)
             && (extremaDireita == 0)  ) {
     controlePid(0);
